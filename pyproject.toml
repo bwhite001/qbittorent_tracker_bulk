@@ -5,7 +5,7 @@ description = "Bulk add trackers to each torrent using a remote qbittorrent clie
 authors = ["Brandon White <koggars@gmail.com>"]
 
 [tool.poetry.scripts]
-qbittorent_add = "qbittorent_tracker_bulk.run:cli"
+qbittorent_add = "qbittorent_tracker_bulk:__main__"
 
 [tool.poetry.dependencies]
 python = "^3.10"

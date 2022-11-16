@@ -14,31 +14,43 @@ from qbittorent_tracker_bulk.lib.trackers_list import TrackersList
 load_dotenv()
 
 HOSTS_STRING = os.environ.get("QTORRENT_URLS", "")
-LIVE_TRACKERS_LIST_URL = os.environ.get("TRACKER_URL",
-                                        "https://cdn.staticaly.com/gh/XIU2/TrackersListCollection/master/best.txt")
-assert LIVE_TRACKERS_LIST_URL != "", "LIVE_TRACKERS_LIST_URL must be defined. and NOT EMPTY"
+LIVE_TRACKERS_LIST_URL = os.environ.get(
+    "TRACKER_URL",
+    "https://cdn.staticaly.com/gh/XIU2/TrackersListCollection/master/best.txt",
+)
+assert (
+    LIVE_TRACKERS_LIST_URL != ""
+), "LIVE_TRACKERS_LIST_URL must be defined. and NOT EMPTY"
+
 
 def parse_host(host_string):
     hosts = []
-    for name in HOSTS_STRING.split(","):
+    for name in host_string.split(","):
         host = urlparse(name.strip())
-        hosts.append({'host': host.scheme + "://" + host.hostname,
-                      'port': host.port, 'password': host.password,
-                      'username': host.username})
+        print(host)
+        hosts.append(
+            {
+                "host": host.scheme + "://" + host.hostname,
+                "port": host.port,
+                "password": host.password,
+                "username": host.username,
+            }
+        )
 
-    assert len(
-        hosts) > 0, "HOSTS_STRING urls seperated by ',' must be defined in the environment or .env file for eg http://admin:adminadmin@192.168.0.243:8080/"
+    assert (
+        len(hosts) > 0
+    ), "HOSTS_STRING urls seperated by ',' must be defined in the environment or .env file for eg http://admin:adminadmin@192.168.0.243:8080/"
     return hosts
 
 
 @click.command()
-@click.option('-h','--hosts', default=None)
+@click.option("-h", "--hosts", default=None)
 def cli(hosts=None):
-    if(hosts is None):
-        hosts = HOSTS_STRING.split(",")
+    if hosts is None:
+        hosts = HOSTS_STRING
     hosts_list = parse_host(hosts)
     trackers = TrackersList(LIVE_TRACKERS_LIST_URL)
-    looper = LoopClients(trackers, hosts_list);
+    looper = LoopClients(trackers, hosts_list)
     looper.run("addAllTrackers", trackersArray=trackers.trackers)
 
 
