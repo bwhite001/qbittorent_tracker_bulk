@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "qbittorent_tracker_bulk"
-version = "0.1.0"
+version = "0.1.1"
 description = "Bulk add trackers to each torrent using a remote qbittorrent client"
 authors = ["Brandon White <koggars@gmail.com>"]
 

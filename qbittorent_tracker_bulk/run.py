@@ -28,6 +28,7 @@ def parse_host(host_string):
     for name in host_string.split(","):
         host = urlparse(name.strip())
         print(host)
+        assert host.hostname is not None, f"Unable to process host {host_string}"
         hosts.append(
             {
                 "host": host.scheme + "://" + host.hostname,
@@ -45,11 +46,15 @@ def parse_host(host_string):
 
 @click.command()
 @click.option("-h", "--hosts", default=None)
-def cli(hosts=None):
+@click.option("-u", "--url", default=None)
+def cli(hosts=None, url=None):
     if hosts is None:
         hosts = HOSTS_STRING
+    if url is None:
+        url = LIVE_TRACKERS_LIST_URL;
+
     hosts_list = parse_host(hosts)
-    trackers = TrackersList(LIVE_TRACKERS_LIST_URL)
+    trackers = TrackersList(url)
     looper = LoopClients(trackers, hosts_list)
     looper.run("addAllTrackers", trackersArray=trackers.trackers)
 
