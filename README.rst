@@ -10,16 +10,16 @@ Installation
 
 You can install qbittorent\_tracker\_bulk via [Poetry](https://python-poetry.org/docs/):
 
-```sh
+``sh
 poetry install
-```
+``
 
 Usage
 -----
 
-```sh
+``sh
 python -m qbittorent_tracker_bulk [-h] [-v] [-u URL] [-i FILE] [--version] TORRENT_FILE
-```
+``
 
 ### Arguments
 
@@ -34,15 +34,15 @@ python -m qbittorent_tracker_bulk [-h] [-v] [-u URL] [-i FILE] [--version] TORRE
 
 Add a single tracker:
 
-```sh
+``sh
 python -m qbittorent_tracker_bulk -u https://example.com/tracker/announce http://example.com/path/to/torrent/file.torrent
-```
+``
 
 Add multiple trackers from a file:
 
-```sh
+``sh
 python -m qbittorent_tracker_bulk -i path/to/tracker_file.txt http://example.com/path/to/torrent/file.torrent
-```
+``
 
 Contributing
 ------------
